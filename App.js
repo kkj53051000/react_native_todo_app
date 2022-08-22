@@ -26,6 +26,20 @@ const App = () => {
     {id: 3, text: '투두리스트 만들어보기', done: false},
   ]);
 
+  const onInsert = text => {
+    // 새로 등록할 항목의 ID값 구하기.
+    // 등록된 항목 중에서 가장 큰 ID를 구하고, 그 값이 1을 더한다.
+    // 만약 리스트가 비어있다면 ID는 1로 사용.
+    const nextId = todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
+    const todo = {
+      id: nextId,
+      text,
+      done: false,
+    };
+
+    setTodos(todos.concat(todo));
+  }
+
   return (
     <SafeAreaProvider>
       <SafeAreaView edges={['bottom']} style={styles.block}>
@@ -34,7 +48,7 @@ const App = () => {
           style={styles.avoid}>
           <DateHead date={today} />
           {todos.length == 0 ? <Empty /> : <TodoList todos={todos} /> }
-          <AddTodo />
+          <AddTodo onInsert={onInsert} />
         </KeyboardAvoidingView>
       </SafeAreaView>
     </SafeAreaProvider>

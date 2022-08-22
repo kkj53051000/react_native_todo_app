@@ -6,14 +6,16 @@ import
     Image,
     TouchableOpacity,
     Platform,
-    TouchableNativeFeedback}
+    TouchableNativeFeedback,
+    Keyboard}
 from 'react-native';
 
-function AddTodo() {
+function AddTodo({onInsert}) {
 
     const [text, setText] = useState('');
 
     const onPress = () => {
+        onInsert(text);
         setText('');
         Keyboard.dismiss();
     };
@@ -24,7 +26,8 @@ function AddTodo() {
                 placeholder="할일을 입력하세요."
                 style={styles.input}
                 value={text}
-                onChange={setText}
+                onChangeText={setText}
+                onSubmitEditing={onPress}
                 returnKeyType="done"
             />
             {Platform.OS === 'ios' ? (
