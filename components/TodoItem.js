@@ -1,15 +1,22 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-function TodoItem({id, text, done}) {
+function TodoItem({id, text, done, onToggle, onRemove}) {
     return (
         <View style={styles.item}>
-            <View style={[styles.circle, done && styles.filled]}>
-                {done &&
-                    <Image source={require('../assets/icons/check_white/check_white.png')} />
-                }
-            </View>
+            <TouchableOpacity onPress={() => onToggle(id)}>
+                <View style={[styles.circle, done && styles.filled]}>
+                    {done &&
+                        <Image source={require('../assets/icons/check_white/check_white.png')} />
+                    }
+                </View>
+            </TouchableOpacity>
             <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
+            {done &&
+                <TouchableOpacity onPress={() => onRemove(id)}>
+                    <Image style={styles.removeBtn} source={require('../assets/trashcan.png')} />
+                </TouchableOpacity>
+            }
         </View>
     );
 }
@@ -42,6 +49,10 @@ const styles = StyleSheet.create({
         color: '#9e9e9e',
         textDecorationLine: 'line-through',
     },
+    removeBtn: {
+        width: 24,
+        height: 24,
+    }
 });
 
 export default TodoItem;
