@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import {View, StyleSheet, TextInput} from 'react-native';
 
 function AddTodo() {
+
+    const [text, setText] = useState('');
+
     return (
         <View style={styles.block} >
-            <TextInput placeholder="할일을 입력하세요." style={styles.input} />
+            <TextInput
+                placeholder="할일을 입력하세요."
+                style={styles.input}
+                value={text}
+                onChange={setText}
+            />
         </View>
     );
 }
